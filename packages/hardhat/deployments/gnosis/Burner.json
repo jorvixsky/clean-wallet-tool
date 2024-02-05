@@ -1,0 +1,82 @@
+{
+  "address": "0x22b1380c4758C30B1569621aa73eb1237459CdeD",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_sender",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "burnERC20Token",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address[]",
+          "name": "_tokens",
+          "type": "address[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "_amounts",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "burnERC20Tokens",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x0afb1d48b450244acaa7e1b8fd595990c135697ad58042835c68af79cb31f066",
+  "receipt": {
+    "to": null,
+    "from": "0xb732E39B719Ef6fd14959E34d778e3E8FD5Cc894",
+    "contractAddress": "0x22b1380c4758C30B1569621aa73eb1237459CdeD",
+    "transactionIndex": 4,
+    "gasUsed": "213226",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1e9df0fdb3a5f6f531ae0f52756cb6936c02560086e24df55799f1041334805b",
+    "transactionHash": "0x0afb1d48b450244acaa7e1b8fd595990c135697ad58042835c68af79cb31f066",
+    "logs": [],
+    "blockNumber": 32303111,
+    "cumulativeGasUsed": "14488255",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 2,
+  "solcInputHash": "404813b770d4fda4481f71081276cbad",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.23+commit.f704f362\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_sender\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_token\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"burnERC20Token\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address[]\",\"name\":\"_tokens\",\"type\":\"address[]\"},{\"internalType\":\"uint256[]\",\"name\":\"_amounts\",\"type\":\"uint256[]\"}],\"name\":\"burnERC20Tokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/Burner.sol\":\"Burner\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/token/ERC20/IERC20.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.9.0) (token/ERC20/IERC20.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC20 standard as defined in the EIP.\\n */\\ninterface IERC20 {\\n    /**\\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\\n     * another (`to`).\\n     *\\n     * Note that `value` may be zero.\\n     */\\n    event Transfer(address indexed from, address indexed to, uint256 value);\\n\\n    /**\\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\\n     * a call to {approve}. `value` is the new allowance.\\n     */\\n    event Approval(address indexed owner, address indexed spender, uint256 value);\\n\\n    /**\\n     * @dev Returns the amount of tokens in existence.\\n     */\\n    function totalSupply() external view returns (uint256);\\n\\n    /**\\n     * @dev Returns the amount of tokens owned by `account`.\\n     */\\n    function balanceOf(address account) external view returns (uint256);\\n\\n    /**\\n     * @dev Moves `amount` tokens from the caller's account to `to`.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transfer(address to, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Returns the remaining number of tokens that `spender` will be\\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\\n     * zero by default.\\n     *\\n     * This value changes when {approve} or {transferFrom} are called.\\n     */\\n    function allowance(address owner, address spender) external view returns (uint256);\\n\\n    /**\\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\\n     * that someone may use both the old and the new allowance by unfortunate\\n     * transaction ordering. One possible solution to mitigate this race\\n     * condition is to first reduce the spender's allowance to 0 and set the\\n     * desired value afterwards:\\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\\n     *\\n     * Emits an {Approval} event.\\n     */\\n    function approve(address spender, uint256 amount) external returns (bool);\\n\\n    /**\\n     * @dev Moves `amount` tokens from `from` to `to` using the\\n     * allowance mechanism. `amount` is then deducted from the caller's\\n     * allowance.\\n     *\\n     * Returns a boolean value indicating whether the operation succeeded.\\n     *\\n     * Emits a {Transfer} event.\\n     */\\n    function transferFrom(address from, address to, uint256 amount) external returns (bool);\\n}\\n\",\"keccak256\":\"0x287b55befed2961a7eabd7d7b1b2839cbca8a5b80ef8dcbb25ed3d4c2002c305\",\"license\":\"MIT\"},\"contracts/Burner.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity 0.8.23;\\nimport { IERC20 } from \\\"@openzeppelin/contracts/token/ERC20/IERC20.sol\\\";\\n\\ncontract Burner {\\n\\n    function burnERC20Token(address _sender, address _token, uint256 _amount) public {\\n        // Burn tokens\\n        IERC20(_token).transferFrom(_sender, address(this), _amount);\\n    }\\n\\n    function burnERC20Tokens(address[] calldata _tokens, uint256[] calldata _amounts) public {\\n        // Burn tokens\\n        for (uint256 i = 0; i < _tokens.length; i++) {\\n            // Burn tokens\\n            burnERC20Token(msg.sender, _tokens[i], _amounts[i]);\\n        }\\n    }\\n}\",\"keccak256\":\"0xe831f97666fbe91d8212864cd2f57b83dc7bf44030c8d1d1ecd8165afaa78ea4\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b506102e5806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806345432ccd1461003b578063fe4b181914610050575b600080fd5b61004e610049366004610161565b610063565b005b61004e61005e3660046101e9565b6100e2565b6040516323b872dd60e01b81526001600160a01b038481166004830152306024830152604482018390528316906323b872dd906064016020604051808303816000875af11580156100b8573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906100dc9190610255565b50505050565b60005b8381101561013e57610136338686848181106101035761010361027e565b90506020020160208101906101189190610294565b85858581811061012a5761012a61027e565b90506020020135610063565b6001016100e5565b5050505050565b80356001600160a01b038116811461015c57600080fd5b919050565b60008060006060848603121561017657600080fd5b61017f84610145565b925061018d60208501610145565b9150604084013590509250925092565b60008083601f8401126101af57600080fd5b50813567ffffffffffffffff8111156101c757600080fd5b6020830191508360208260051b85010111156101e257600080fd5b9250929050565b600080600080604085870312156101ff57600080fd5b843567ffffffffffffffff8082111561021757600080fd5b6102238883890161019d565b9096509450602087013591508082111561023c57600080fd5b506102498782880161019d565b95989497509550505050565b60006020828403121561026757600080fd5b8151801515811461027757600080fd5b9392505050565b634e487b7160e01b600052603260045260246000fd5b6000602082840312156102a657600080fd5b6102778261014556fea2646970667358221220daac2e319ffa1fd15746cd466d73ee2159abd437144abed1c481230ba3a7265d64736f6c63430008170033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c806345432ccd1461003b578063fe4b181914610050575b600080fd5b61004e610049366004610161565b610063565b005b61004e61005e3660046101e9565b6100e2565b6040516323b872dd60e01b81526001600160a01b038481166004830152306024830152604482018390528316906323b872dd906064016020604051808303816000875af11580156100b8573d6000803e3d6000fd5b505050506040513d601f19601f820116820180604052508101906100dc9190610255565b50505050565b60005b8381101561013e57610136338686848181106101035761010361027e565b90506020020160208101906101189190610294565b85858581811061012a5761012a61027e565b90506020020135610063565b6001016100e5565b5050505050565b80356001600160a01b038116811461015c57600080fd5b919050565b60008060006060848603121561017657600080fd5b61017f84610145565b925061018d60208501610145565b9150604084013590509250925092565b60008083601f8401126101af57600080fd5b50813567ffffffffffffffff8111156101c757600080fd5b6020830191508360208260051b85010111156101e257600080fd5b9250929050565b600080600080604085870312156101ff57600080fd5b843567ffffffffffffffff8082111561021757600080fd5b6102238883890161019d565b9096509450602087013591508082111561023c57600080fd5b506102498782880161019d565b95989497509550505050565b60006020828403121561026757600080fd5b8151801515811461027757600080fd5b9392505050565b634e487b7160e01b600052603260045260246000fd5b6000602082840312156102a657600080fd5b6102778261014556fea2646970667358221220daac2e319ffa1fd15746cd466d73ee2159abd437144abed1c481230ba3a7265d64736f6c63430008170033",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
