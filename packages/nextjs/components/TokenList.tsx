@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { BurnableToken } from "./Burn";
-import { BalanceItem, ChainID, CovalentClient } from "@covalenthq/client-sdk";
+import { BalanceItem, ChainID } from "@covalenthq/client-sdk";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-import approveSpendingToken from "~~/utils/scaffold-eth/approveSpendingToken";
+import deployedContracts from "~~/contracts/deployedContracts";
+import approveSpendingToken from "~~/utils/burning/approveSpendingToken";
+import getTokens from "~~/utils/burning/getTokens";
 
 interface TokenListProps {
   chain?: ChainID;
@@ -13,28 +15,18 @@ interface TokenListProps {
 }
 
 export default function TokenList({ chain, onBurnableTokensChange }: TokenListProps) {
-  const burner = "0x22b1380c4758C30B1569621aa73eb1237459CdeD";
-
   const api = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 
   const { address } = useAccount();
 
-  const client = new CovalentClient(api!);
-
+  const [burningContract, setBurningContract] = useState<`0x${string}` | undefined>();
   const [tokens, setTokens] = useState<BalanceItem[]>([]);
   const [burnableTokens, setBurnableTokens] = useState<BurnableToken[]>([]);
 
   useEffect(() => {
-    async function getTokens() {
-      if (!chain || !address) return;
-      try {
-        const tokens = await client.BalanceService.getTokenBalancesForWalletAddress(chain, address);
-        return tokens.data.items;
-      } catch (error) {
-        return error;
-      }
-    }
-    getTokens()
+    if (chain) setBurningContract(deployedContracts[chain as keyof typeof deployedContracts].Burner.address);
+    if (!chain) setBurningContract(undefined);
+    getTokens({ chain, address: address as `0x${string}` })
       .then(tokens => {
         setTokens(tokens as BalanceItem[]);
       })
@@ -46,6 +38,7 @@ export default function TokenList({ chain, onBurnableTokensChange }: TokenListPr
   }, [burnableTokens]);
 
   if (!api) return <p>API key not found</p>;
+  if (!chain) return <p>Chain not found</p>;
   if (!address) return <ConnectButton />;
 
   return (
@@ -82,7 +75,7 @@ export default function TokenList({ chain, onBurnableTokensChange }: TokenListPr
                           approveSpendingToken({
                             token: token.contract_address as `0x${string}`,
                             amount: token.balance!, // If it is here, balance is always > 0
-                            spender: burner,
+                            spender: burningContract!, // Fix this (burning contract might not exist)
                           });
                         } else {
                           setBurnableTokens(burnableTokens.filter(t => t.contract_address !== token.contract_address));
