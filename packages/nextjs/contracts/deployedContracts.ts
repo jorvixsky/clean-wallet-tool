@@ -7,26 +7,8 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   100: {
     Burner: {
-      address: "0xc2778e6b8CAe587C2C175128e4d48EeF1D3bAE07",
+      address: "0x12f6021925bb76c347Bd86356d1b4dD9226Edc6B",
       abi: [
-        {
-          inputs: [
-            {
-              internalType: "address[]",
-              name: "_tokens",
-              type: "address[]",
-            },
-            {
-              internalType: "uint256[]",
-              name: "_amounts",
-              type: "uint256[]",
-            },
-          ],
-          name: "approveERC20Tokens",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
         {
           inputs: [
             {
