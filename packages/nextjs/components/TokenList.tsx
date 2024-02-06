@@ -60,36 +60,39 @@ export default function TokenList({ chain, onBurnableTokensChange }: TokenListPr
         </thead>
         <tbody>
           {tokens &&
-            tokens.map(token => (
-              <tr key={token.contract_address}>
-                <td>{token.contract_name || "Null"}</td>
-                <td>{token.contract_address}</td>
-                <td>
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    onChange={e => {
-                      if (e.target.checked) {
-                        setBurnableTokens([
-                          ...burnableTokens,
-                          {
-                            contract_address: token.contract_address as `0x${string}`,
+            tokens
+              .filter(token => Number(token.balance) > 0)
+              .map(token => (
+                <tr key={token.contract_address}>
+                  <td>{token.contract_name || "Null"}</td>
+                  <td>{token.contract_address}</td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      onChange={e => {
+                        if (e.target.checked) {
+                          setBurnableTokens([
+                            ...burnableTokens,
+                            {
+                              contract_address: token.contract_address as `0x${string}`,
+                              amount: token.balance!, // If it is here, balance is always > 0
+                            },
+                          ]);
+                          approveSpendingToken({
+                            token: token.contract_address as `0x${string}`,
                             amount: token.balance!, // If it is here, balance is always > 0
-                          },
-                        ]);
-                        approveSpendingToken({
-                          token: token.contract_address as `0x${string}`,
-                          amount: token.balance!, // If it is here, balance is always > 0
-                          spender: burner,
-                        });
-                      } else {
-                        setBurnableTokens(burnableTokens.filter(t => t.contract_address !== token.contract_address));
-                      }
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
+                            spender: burner,
+                          });
+                        } else {
+                          setBurnableTokens(burnableTokens.filter(t => t.contract_address !== token.contract_address));
+                        }
+                      }}
+                    />
+                  </td>
+                  <td>{Number(token.balance)}</td>
+                </tr>
+              ))}
         </tbody>
       </table>
     </div>
