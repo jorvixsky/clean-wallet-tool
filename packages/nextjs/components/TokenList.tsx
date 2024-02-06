@@ -5,27 +5,24 @@ import { BurnableToken } from "./Burn";
 import { BalanceItem, ChainID } from "@covalenthq/client-sdk";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useAccount } from "wagmi";
-import deployedContracts from "~~/contracts/deployedContracts";
 import approveSpendingToken from "~~/utils/burning/approveSpendingToken";
 import getTokens from "~~/utils/burning/getTokens";
 
 interface TokenListProps {
   chain?: ChainID;
+  burningContract: `0x${string}` | undefined;
   onBurnableTokensChange: (burnableTokens: BurnableToken[]) => void;
 }
 
-export default function TokenList({ chain, onBurnableTokensChange }: TokenListProps) {
+export default function TokenList({ chain, burningContract, onBurnableTokensChange }: TokenListProps) {
   const api = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 
   const { address } = useAccount();
 
-  const [burningContract, setBurningContract] = useState<`0x${string}` | undefined>();
   const [tokens, setTokens] = useState<BalanceItem[]>([]);
   const [burnableTokens, setBurnableTokens] = useState<BurnableToken[]>([]);
 
   useEffect(() => {
-    if (chain) setBurningContract(deployedContracts[chain as keyof typeof deployedContracts].Burner.address);
-    if (!chain) setBurningContract(undefined);
     getTokens({ chain, address: address as `0x${string}` })
       .then(tokens => {
         setTokens(tokens as BalanceItem[]);

@@ -9,11 +9,10 @@ export interface BurnableToken {
 
 interface BurnProps {
   burnableTokens: BurnableToken[];
+  burnContract: `0x${string}` | undefined;
 }
 
-export default function Burn({ burnableTokens }: BurnProps) {
-  const burner = "0x22b1380c4758C30B1569621aa73eb1237459CdeD";
-
+export default function Burn({ burnableTokens, burnContract }: BurnProps) {
   const [contracts, setContracts] = useState<`0x${string}`[]>([]);
   const [amounts, setAmounts] = useState<bigint[]>([]);
 
@@ -25,7 +24,7 @@ export default function Burn({ burnableTokens }: BurnProps) {
   }, [burnableTokens]);
 
   const { config } = usePrepareContractWrite({
-    address: burner,
+    address: burnContract,
     abi: parseAbi(["function burnERC20Tokens(address[] calldata tokens, uint256[] calldata amounts)"]),
     functionName: "burnERC20Tokens",
     args: [contracts, amounts],
@@ -34,7 +33,7 @@ export default function Burn({ burnableTokens }: BurnProps) {
   const { write: burnTokens } = useContractWrite(config);
 
   return (
-    <button onClick={burnTokens} disabled={!burnableTokens}>
+    <button onClick={burnTokens} className="btn btn-primary" disabled={!burnContract || burnableTokens.length < 1}>
       Burn
     </button>
   );
