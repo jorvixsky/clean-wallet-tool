@@ -90,7 +90,6 @@ export default function TokenList({ chain, onBurnableTokensChange }: TokenListPr
                       }}
                     />
                   </td>
-                  <td>{Number(token.balance)}</td>
                 </tr>
               ))}
         </tbody>
