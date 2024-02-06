@@ -32,7 +32,7 @@ export default function TokenList({ chain, burningContract, onBurnableTokensChan
 
   useEffect(() => {
     onBurnableTokensChange(burnableTokens);
-  }, [burnableTokens]);
+  }, [burnableTokens, onBurnableTokensChange]);
 
   if (!api) return <p>API key not found</p>;
   if (!chain) return <p>Chain not found</p>;
